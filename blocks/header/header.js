@@ -129,26 +129,43 @@ export default async function decorate(block) {
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
+    const normalizePath = (path) => path.replace(/\/+$/, '') || '/';
+    const currentPath = normalizePath(window.location.pathname);
+
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
       const subList = navSection.querySelector(':scope > ul');
-      if (!subList) return;
-      navSection.classList.add('nav-drop');
-      // wrap the dropdown label in a button so it is announced as expandable
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.setAttribute('aria-expanded', false);
-      [...navSection.childNodes].forEach((node) => {
-        if (node !== subList) button.append(node);
+      const links = [...navSection.querySelectorAll('a[href]')];
+      const linkPaths = links.map((link) => {
+        const path = new URL(link.href, window.location).pathname;
+        return normalizePath(path);
       });
-      navSection.prepend(button);
-      button.addEventListener('click', () => {
-        const expanded = button.getAttribute('aria-expanded') === 'true';
-        if (isDesktop.matches) {
-          button.focus();
-          toggleAllNavSections(navSections);
-        }
-        button.setAttribute('aria-expanded', !expanded);
+      const isActive = linkPaths.some((path) => currentPath === path
+        || (path !== '/' && currentPath.startsWith(`${path}/`)));
+
+      links.forEach((link, index) => {
+        if (linkPaths[index] === currentPath) link.setAttribute('aria-current', 'page');
       });
+
+      if (subList) {
+        navSection.classList.add('nav-drop');
+        // wrap the dropdown label in a button so it is announced as expandable
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-expanded', false);
+        [...navSection.childNodes].forEach((node) => {
+          if (node !== subList) button.append(node);
+        });
+        if (isActive) button.classList.add('nav-active');
+        navSection.prepend(button);
+        button.addEventListener('click', () => {
+          const expanded = button.getAttribute('aria-expanded') === 'true';
+          if (isDesktop.matches) {
+            button.focus();
+            toggleAllNavSections(navSections);
+          }
+          button.setAttribute('aria-expanded', !expanded);
+        });
+      }
     });
   }
 

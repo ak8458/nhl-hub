@@ -11,3 +11,5 @@ helix-importer-ui
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
