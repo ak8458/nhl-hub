@@ -1,0 +1,50 @@
+main .vidyard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: 20px;
+}
+
+main .vidyard-figure {
+  max-width: 760px;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #dce4ee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgb(6 27 53 / 5%);
+}
+
+main .vidyard-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #061b35;
+}
+
+main .vidyard-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+main .vidyard-figure figcaption {
+  padding: 18px;
+}
+
+main .vidyard-figure h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+main .vidyard-figure p {
+  margin: 0 0 10px;
+  color: #52657a;
+  font-size: 0.88rem;
+}
+
+main .vidyard-figure a:any-link {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
