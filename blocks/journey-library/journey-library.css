@@ -5,40 +5,58 @@ main .journey-library {
 main .journey-library-controls {
   display: grid;
   gap: 18px;
-  margin-bottom: 28px;
-  padding: 22px;
+  margin-bottom: 34px;
+  padding: 24px;
   border: 1px solid #dce4ee;
-  border-radius: 16px;
+  border-radius: 14px;
   background: #fff;
-  box-shadow: 0 6px 18px rgb(6 27 53 / 4%);
+  box-shadow:
+    0 2px 4px rgb(5 25 45 / 3%),
+    0 12px 30px rgb(5 25 45 / 5.5%);
 }
 
 main .journey-search,
 main .journey-filter {
   display: grid;
-  gap: 6px;
-  color: #52657a;
-  font-size: 0.8rem;
-  font-weight: 700;
+  gap: 7px;
+  color: #5a6c7e;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.095em;
+  text-transform: uppercase;
+}
+
+main .journey-search {
+  gap: 8px;
 }
 
 main .journey-search input,
 main .journey-filter select {
   box-sizing: border-box;
   width: 100%;
-  min-height: 44px;
+  height: 43px;
   border: 1px solid #bac8d7;
   border-radius: 8px;
-  padding: 9px 12px;
+  padding: 0 12px;
   background: #fff;
   color: #071d36;
-  font: inherit;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+main .journey-search input {
+  height: 48px;
+  padding: 0 15px;
 }
 
 main .journey-filter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
 main .journey-control-footer {
@@ -321,6 +339,24 @@ main .journey-library-dialog button:focus-visible {
 @media (width >= 900px) {
   main .journey-library-controls {
     padding: 24px;
+  }
+}
+
+@media (width < 861px) {
+  main .journey-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width < 681px) {
+  main .journey-library-controls {
+    margin-bottom: 24px;
+    border-radius: 11px;
+    padding: 18px;
+  }
+
+  main .journey-filter-grid {
+    grid-template-columns: 1fr;
   }
 }
 
