@@ -1,6 +1,10 @@
 /* header and nav layout */
+header {
+  height: auto;
+}
+
 header .nav-wrapper {
-  background-color: var(--background-color);
+  background-color: #061b35;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -15,10 +19,11 @@ header nav {
   align-items: center;
   gap: 0 24px;
   margin: auto;
-  max-width: 1248px;
+  max-width: 1280px;
   height: var(--nav-height);
   padding: 0 24px;
   font-family: var(--body-font-family);
+  color: #fff;
 }
 
 header nav[aria-expanded='true'] {
@@ -39,7 +44,7 @@ header nav[aria-expanded='true'] {
     display: flex;
     justify-content: space-between;
     gap: 0 32px;
-    max-width: 1264px;
+    max-width: 1280px;
     padding: 0 32px;
   }
 }
@@ -51,6 +56,73 @@ header nav p {
 
 header nav a:any-link {
   color: currentcolor;
+}
+
+header .nhl-masthead {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 230px;
+  overflow: hidden;
+  padding: 44px max(7%, calc((100% - 1280px) / 2));
+  background: #061b35;
+  color: #fff;
+}
+
+header .nhl-masthead > picture {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+}
+
+header .nhl-masthead > picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+header .nhl-masthead::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(2 14 29 / 92%), rgb(2 14 29 / 30%));
+  content: '';
+}
+
+header .nhl-masthead > div {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+}
+
+header .nhl-masthead p {
+  max-width: 640px;
+  color: rgb(255 255 255 / 90%);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+header .nhl-masthead p:first-child {
+  margin-bottom: 10px;
+  color: #b9dcff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+header .nhl-masthead h1 {
+  max-width: 700px;
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.05;
+}
+
+@media (width >= 900px) {
+  header .nhl-masthead {
+    min-height: 245px;
+  }
 }
 
 /* hamburger */
@@ -137,15 +209,22 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 /* brand */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
+  flex-basis: 170px;
   font-size: var(--heading-font-size-s);
   font-weight: 700;
   line-height: 1;
+  color: #fff;
 }
 
 header nav .nav-brand img {
   width: 128px;
   height: auto;
+}
+
+header nav .nav-brand a:any-link {
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 0.06em;
 }
 
 /* sections */
@@ -165,7 +244,7 @@ header nav[aria-expanded='true'] .nav-sections {
 header nav .nav-sections ul {
   list-style: none;
   padding-left: 0;
-  font-size: var(--body-font-size-s);
+  font-size: 13px;
 }
 
 header nav .nav-sections ul > li {
@@ -225,7 +304,7 @@ header nav .nav-sections .nav-drop > button[aria-expanded='false'] + ul {
 
   header nav .nav-sections ul {
     display: flex;
-    gap: 24px;
+    gap: 20px;
     margin: 0;
   }
 
@@ -246,8 +325,12 @@ header nav .nav-sections .nav-drop > button[aria-expanded='false'] + ul {
     width: 200px;
     top: 150%;
     padding: 16px;
-    background-color: var(--light-color);
+    background-color: #fff;
+    color: #061b35;
     white-space: initial;
+    border: 1px solid #dce4ee;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 24px rgb(6 27 53 / 18%);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
@@ -259,7 +342,7 @@ header nav .nav-sections .nav-drop > button[aria-expanded='false'] + ul {
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
+    border-bottom: 8px solid #fff;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
@@ -270,4 +353,32 @@ header nav .nav-sections .nav-drop > button[aria-expanded='false'] + ul {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+}
+
+header nav .nav-tools a:any-link {
+  color: #b9dcff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (width < 900px) {
+  header .nav-wrapper {
+    position: relative;
+  }
+
+  header nav {
+    background: #061b35;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections ul {
+    display: block;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections ul > li {
+    padding: 8px 0;
+  }
+
+  header nav .nav-sections .nav-drop > button {
+    color: #fff;
+  }
 }

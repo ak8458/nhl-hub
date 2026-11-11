@@ -91,13 +91,25 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  if (window.location.pathname === '/') {
+    block.closest('header')?.remove();
+    return;
+  }
+
+  const mastheadFragment = await loadFragment('/fragments/masthead');
+  const masthead = mastheadFragment?.querySelector('.nhl-masthead');
+
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
+  if (!fragment) {
+    throw new Error(`Navigation fragment could not be loaded from ${navPath}.`);
+  }
 
   // decorate nav DOM
   block.textContent = '';
+  if (masthead) block.append(masthead);
   const nav = document.createElement('nav');
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
@@ -109,10 +121,10 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand?.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+    brandLink.closest('.button-container')?.classList.remove('button-container');
   }
 
   const navSections = nav.querySelector('.nav-sections');

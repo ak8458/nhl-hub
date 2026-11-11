@@ -1,0 +1,22 @@
+.anchor-nav .section-anchor-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.anchor-nav .section-anchor-nav a:any-link {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #edf5fc;
+  color: #173858;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.anchor-nav .section-anchor-nav a:focus-visible,
+.anchor-nav .section-anchor-nav a:hover {
+  background: #d7ecff;
+  outline: 2px solid #0875d1;
+  outline-offset: 2px;
+}
