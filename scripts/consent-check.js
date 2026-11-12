@@ -1,3 +1,5 @@
+import { applyConsent } from './analytics.js';
+
 let consentedLoaded = false;
 
 /**
@@ -37,6 +39,8 @@ function loadConsented() {
  */
 function onConsentUpdate() {
   const consented = hasConsent();
+  // the Web SDK waits in "pending" consent until this decision is applied
+  applyConsent(consented);
   window.dispatchEvent(new CustomEvent('consent.update', { detail: { consented } }));
   if (consented) {
     loadConsented();

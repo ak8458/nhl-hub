@@ -18,6 +18,16 @@ Before using the aem-boilerplate, we recommend you to go through the documentati
 - To use a looping hero video, add an MP4 link to the hero image cell or link the image to the MP4. The image remains the fallback when the video cannot play or reduced motion is enabled.
 - To hide the masthead and navigation on a page, add `header: off` to its metadata. The home page remains headerless by default.
 
+## Analytics
+
+The site sends data to Adobe Experience Platform with the Web SDK, through the [AEM martech plugin](https://github.com/adobe-rnd/aem-martech) vendored in `plugins/martech`. The data is reported in Customer Journey Analytics and forwarded to Adobe Analytics.
+
+- Add org and datastream IDs in `scripts/martech-config.js`. Tracking stays off until they are set.
+- Collection is gated by consent through `scripts/consent-check.js`, which is a placeholder that defaults to decline; add `?consent=accept` to test.
+- Blocks report interactions with `trackEvent('<area>.<action>', details)` from `scripts/analytics-events.js`.
+
+Docs: [SDR](docs/analytics/sdr.md) · [AEP setup](docs/analytics/aep-setup.md) · [CJA setup](docs/analytics/cja-setup.md) · [Workspace design](docs/analytics/workspace-design.md) · [QA checklist](docs/analytics/qa-checklist.md) · [XDM field group](docs/analytics/xdm/nhl-hub-fieldgroup.json)
+
 ## Installation
 
 ```sh

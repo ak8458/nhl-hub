@@ -223,6 +223,11 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // not awaited: analytics must never delay the page. The consent gate runs in the same
+  // phase so its decision reaches the Web SDK before the page view is sent.
+  import('./analytics.js');
+  import('./consent-check.js');
 }
 
 /**
@@ -230,7 +235,7 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
-  import('./consent-check.js');
+  import('./analytics.js').then(({ analyticsDelayed }) => analyticsDelayed());
   // load anything that can be postponed to the latest here
 }
 
