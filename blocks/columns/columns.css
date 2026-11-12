@@ -31,3 +31,300 @@
     order: unset;
   }
 }
+
+/* stylelint-disable no-descending-specificity -- Page variants override shared column defaults. */
+main:has(.columns.aep-intro) > .section:has(.columns.aep-intro),
+main:has(.columns.aep-intro) > .section:has(.cards.solution-capability-cards),
+main:has(.columns.aep-intro) > .section:has(.columns.rtcdp-intro) {
+  background-color: #fff;
+}
+
+main:has(.columns.aep-intro) > .section.vidyard-container {
+  background-image: linear-gradient(90deg, #f4faff 0%, #e7f4fd 100%);
+}
+
+main:has(.columns.aep-intro) > .section:has(.cards.solution-next-cards) {
+  background-color: #f6f8fa;
+}
+
+@media (width >= 700px) {
+  main:has(.columns.aep-intro) > .section > div {
+    padding-right: 6%;
+    padding-left: 6%;
+  }
+
+  main:has(.columns.aep-intro) > .section:has(.columns.aep-intro) {
+    padding-top: 72px;
+  }
+
+  main:has(.columns.aep-intro) > .hero-container {
+    min-height: 161px;
+  }
+
+  main .columns.aep-intro > div,
+  main .columns.rtcdp-intro > div {
+    display: grid;
+    align-items: center;
+  }
+
+  main .columns.aep-intro > div {
+    grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr);
+    gap: 60px;
+  }
+
+  main .columns.rtcdp-intro > div {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    gap: 60px;
+  }
+
+  main .columns.rtcdp-intro > div > div:first-child {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 390px;
+    border-radius: 14px;
+    padding: 22px;
+    background: linear-gradient(135deg, #061b35 0%, #0d4774 100%);
+    color: #fff;
+  }
+
+  main .columns.aep-intro > div > div:first-child > p:first-child,
+  main .columns.rtcdp-intro > div > div:first-child > p:first-child {
+    margin: 0 0 10px;
+    color: #0875d1;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    line-height: 13px;
+  }
+
+  main .columns.aep-intro > div > div:first-child > h2,
+  main .columns.rtcdp-intro > div > div:first-child > h2 {
+    margin: 0 0 18px;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  main .columns.aep-intro > div > div:first-child > p:not(:first-child, :has(a)),
+  main .columns.rtcdp-intro > div > div:first-child > p:not(:first-child, :has(a)) {
+    margin: 0 0 16px;
+    line-height: 1.6;
+  }
+
+  main .columns.aep-intro > div > div:first-child > p:has(a) {
+    display: inline-flex;
+    margin: 26px 10px 0 0;
+  }
+
+  main .columns.aep-intro > div > div:first-child > p:has(a) > a {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    border: 1px solid #0875d1;
+    border-radius: 8px;
+    padding: 9px 14px;
+    background: #0875d1;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  main .columns.aep-intro > div > div:first-child > p:has(a) + p:has(a) > a {
+    border-color: #d3dee9;
+    background: #fff;
+    color: #071d36;
+  }
+
+  main .columns.aep-intro > div > div:last-child {
+    position: relative;
+    border-left: 1px solid #dce4ee;
+    min-height: 64px;
+    padding: 0 0 0 100px;
+  }
+
+  main .columns.aep-intro > div > div:last-child::before {
+    position: absolute;
+    top: 0;
+    left: 24px;
+    display: grid;
+    width: 56px;
+    height: 56px;
+    transform: rotate(-7deg);
+    border: 2px solid #071d36;
+    border-radius: 12px;
+    color: #071d36;
+    content: "NHL";
+    font-size: 14px;
+    font-weight: 900;
+    place-items: center;
+  }
+
+  main .columns.aep-intro > div > div:last-child > p:first-child {
+    display: none;
+  }
+
+  main .columns.aep-intro > div > div:last-child > h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  main .columns.aep-intro > div > div:last-child > p:last-child {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child::before {
+    position: absolute;
+    bottom: 25px;
+    left: 45px;
+    color: rgb(255 255 255 / 8%);
+    content: "01";
+    font-size: 170px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child::after {
+    position: absolute;
+    top: -70px;
+    right: -50px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgb(50 173 255 / 18%);
+    content: "";
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child > p {
+    position: absolute;
+    z-index: 1;
+    top: 42px;
+    right: 34px;
+    width: 55%;
+    min-width: 260px;
+    margin: 0;
+    border: 1px solid rgb(151 215 255 / 50%);
+    border-bottom: 0;
+    border-radius: 12px 12px 0 0;
+    padding: 18px 18px 0;
+    background: rgb(6 33 59 / 82%);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 850;
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child > p::after {
+    float: right;
+    content: "→";
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child > ul {
+    position: absolute;
+    z-index: 1;
+    top: 82px;
+    right: 34px;
+    width: 55%;
+    min-width: 260px;
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    border: 1px solid rgb(151 215 255 / 50%);
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+    padding: 0 18px 18px;
+    background: rgb(6 33 59 / 82%);
+    list-style: none;
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child > ul > li {
+    position: relative;
+    border-radius: 8px;
+    padding: 11px 12px;
+    background: rgb(255 255 255 / 10%);
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child > ul > li::before {
+    position: absolute;
+    left: 12px;
+    color: #4bc5ff;
+    content: "◉";
+  }
+
+  main .columns.rtcdp-intro > div > div:last-child > ul > li::after {
+    position: absolute;
+    right: 12px;
+    content: "›";
+  }
+
+  main .columns.rtcdp-intro > div > div:first-child > p:has(a) {
+    margin: 26px 0 0;
+  }
+
+  main .columns.rtcdp-intro > div > div:first-child > p:has(a) > a {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    border-radius: 8px;
+    padding: 9px 14px;
+    background: #0875d1;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+}
+
+@media (width >= 700px) and (width < 900px) {
+  main:has(.columns.aep-intro) > .section:has(.columns.rtcdp-intro) {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  main .columns.rtcdp-intro > div {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    min-height: 434px;
+  }
+}
+
+@media (width >= 900px) {
+  main:has(.columns.aep-intro) > .section:has(.columns.rtcdp-intro) {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  main:has(.columns.aep-intro) > .hero-container {
+    min-height: 143px;
+  }
+
+  main .columns.aep-intro > div {
+    grid-template-columns: minmax(0, 2.35fr) minmax(0, 1fr);
+  }
+
+  main .columns.rtcdp-intro > div {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 60px;
+  }
+
+  main .columns.aep-intro > div > div:first-child > h2,
+  main .columns.rtcdp-intro > div > div:first-child > h2 {
+    font-size: 48px;
+    letter-spacing: -0.035em;
+  }
+}
+/* stylelint-enable no-descending-specificity */

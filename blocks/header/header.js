@@ -91,18 +91,13 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  if (window.location.pathname === '/') {
-    block.closest('header')?.remove();
-    return;
-  }
-
-  const mastheadFragment = await loadFragment('/fragments/masthead');
-  const masthead = mastheadFragment?.querySelector('.nhl-masthead');
-
-  // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  const [mastheadFragment, fragment] = await Promise.all([
+    loadFragment('/fragments/masthead'),
+    loadFragment(navPath),
+  ]);
+  const masthead = mastheadFragment?.querySelector('.nhl-masthead');
   if (!fragment) {
     throw new Error(`Navigation fragment could not be loaded from ${navPath}.`);
   }
@@ -186,4 +181,11 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+  if (navSections && window.matchMedia('(max-width: 599px)').matches) {
+    const activeItem = navSections.querySelector('.nav-drop > button.nav-active, a[aria-current="page"]');
+    if (activeItem) {
+      navSections.scrollLeft = activeItem.getBoundingClientRect().left
+        - nav.getBoundingClientRect().left - 1;
+    }
+  }
 }

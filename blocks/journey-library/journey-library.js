@@ -5,6 +5,13 @@ const filterFields = [
   ['complexity', 'Complexity'],
 ];
 
+const filterOptionOrder = {
+  level: ['League', 'Club'],
+  readiness: ['Foundation', 'Priority', 'Pilot', 'Candidate'],
+  value: ['High', 'Medium'],
+  complexity: ['Medium', 'High', 'Low'],
+};
+
 let instanceCount = 0;
 
 function getField(cell, label) {
@@ -159,7 +166,9 @@ function createCard(record, index, dialog) {
   cardHeader.className = 'journey-card-header';
   cardHeader.append(createTextElement('span', 'journey-id', record.id || 'Journey'));
   cardHeader.append(createTextElement('span', 'journey-readiness', record.readiness));
-  cardHeader.append(createTextElement('span', 'journey-level', record.level));
+  if (record.level) {
+    cardHeader.append(createTextElement('span', 'journey-level', `${record.level} journey`));
+  }
   if (record.source) cardHeader.append(createTextElement('span', 'journey-source', record.source));
   article.append(cardHeader);
 
@@ -192,6 +201,9 @@ function createCard(record, index, dialog) {
   footer.append(channel);
 
   const learnMore = createTextElement('button', 'journey-learn-more', 'Learn more');
+  const arrow = createTextElement('span', '', '→');
+  arrow.setAttribute('aria-hidden', 'true');
+  learnMore.append(' ', arrow);
   learnMore.type = 'button';
   learnMore.setAttribute('aria-haspopup', 'dialog');
   learnMore.addEventListener('click', () => dialog.showModal());
@@ -246,7 +258,12 @@ export default function decorate(block) {
   const filterGrid = document.createElement('div');
   filterGrid.className = 'journey-filter-grid';
   filterFields.forEach(([key, label]) => {
-    const options = [...new Set(records.map((record) => record[key]).filter(Boolean))].sort();
+    const availableOptions = new Set(records.map((record) => record[key]).filter(Boolean));
+    const preferredOptions = filterOptionOrder[key];
+    const options = [
+      ...preferredOptions.filter((option) => availableOptions.has(option)),
+      ...[...availableOptions].filter((option) => !preferredOptions.includes(option)).sort(),
+    ];
     const filter = createFilter(label, key, options, `${blockId}-${key}`);
     filters[key] = filter.select;
     filterGrid.append(filter.wrapper);
