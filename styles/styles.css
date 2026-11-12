@@ -92,6 +92,10 @@ body.appear {
   display: block;
 }
 
+body.header-loading main {
+  visibility: hidden;
+}
+
 header {
   height: var(--nav-height);
 }

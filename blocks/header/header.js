@@ -91,19 +91,13 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  const headerMeta = getMetadata('header');
-  if (window.location.pathname === '/' || headerMeta?.trim().toLowerCase() === 'off') {
-    block.closest('header')?.remove();
-    return;
-  }
-
-  const mastheadFragment = await loadFragment('/fragments/masthead');
-  const masthead = mastheadFragment?.querySelector('.nhl-masthead');
-
-  // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  const [mastheadFragment, fragment] = await Promise.all([
+    loadFragment('/fragments/masthead'),
+    loadFragment(navPath),
+  ]);
+  const masthead = mastheadFragment?.querySelector('.nhl-masthead');
   if (!fragment) {
     throw new Error(`Navigation fragment could not be loaded from ${navPath}.`);
   }

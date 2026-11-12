@@ -51,6 +51,7 @@ header nav[aria-expanded='true'] {
 
 header nav p {
   margin: 0;
+  color: inherit;
   line-height: 1;
 }
 

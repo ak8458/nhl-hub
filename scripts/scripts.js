@@ -5,12 +5,15 @@ import {
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
+  getMetadata,
   waitForFirstImage,
   loadSection,
   loadSections,
   loadCSS,
   buildBlock,
 } from './aem.js';
+
+const HEADER_LOAD_TIMEOUT = 3000;
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
@@ -164,9 +167,34 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    const header = doc.querySelector('body > header');
+    let headerReady = Promise.resolve();
+    if (header) {
+      if (window.location.pathname === '/' || getMetadata('header').trim().toLowerCase() === 'off') {
+        header.remove();
+      } else {
+        doc.body.classList.add('header-loading');
+        let timeoutId;
+        const timeout = new Promise((resolve) => {
+          timeoutId = window.setTimeout(() => {
+            // eslint-disable-next-line no-console
+            console.warn('Header is taking too long to load; showing page content.');
+            resolve();
+          }, HEADER_LOAD_TIMEOUT);
+        });
+        headerReady = Promise.race([loadHeader(header), timeout]).finally(() => {
+          window.clearTimeout(timeoutId);
+          doc.body.classList.remove('header-loading');
+        });
+      }
+    }
+
     decorateMain(main);
     document.body.classList.add('appear');
-    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    await Promise.all([
+      loadSection(main.querySelector('.section'), waitForFirstImage),
+      headerReady,
+    ]);
   }
 
   try {
@@ -184,8 +212,6 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('body > header'));
-
   const main = doc.querySelector('main');
   await loadSections(main);
 
