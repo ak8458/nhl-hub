@@ -37,7 +37,7 @@
   --heading-font-size-xs: 16px;
 
   /* nav height */
-  --nav-height: 49px;
+  --nav-height: 50px;
 }
 
 *,
@@ -372,9 +372,17 @@ main > .section.journey-library-container > .journey-library-wrapper {
   padding: 0;
 }
 
+main > .section.journey-library-container {
+  padding: 22px 0 80px;
+}
+
 @media (width < 1180px) {
   main > .section.journey-library-container > .journey-library-wrapper {
     width: min(1120px, calc(100% - 48px));
+  }
+
+  main > .section.journey-library-container {
+    padding: 28px 0 64px;
   }
 }
 
@@ -387,6 +395,10 @@ main > .section.journey-library-container > .journey-library-wrapper {
 @media (width < 680px) {
   main > .section.journey-library-container > .journey-library-wrapper {
     width: calc(100% - 28px);
+  }
+
+  main > .section.journey-library-container {
+    padding: 23px 0 50px;
   }
 }
 
@@ -756,4 +768,63 @@ main:has(.hero.home-hero) > .section:where(.hero-container:has(.hero.home-hero)
   font-weight: 800;
   line-height: normal;
   text-decoration: none;
+}
+
+main > .section:has(#adobe-experience-league) {
+  width: auto;
+  margin: 0 7% 70px;
+  border-radius: 18px;
+  padding: 36px;
+  background: linear-gradient(110deg, #061b35 0%, #0b315c 58%, #155f9f 100%);
+  color: #fff;
+}
+
+main > .section:has(#adobe-experience-league) > .default-content-wrapper {
+  max-width: 760px;
+  padding: 0;
+}
+
+main > .section:has(#adobe-experience-league) .default-content-wrapper > p:first-child {
+  margin: 0 0 9px;
+  color: #abd7ff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: normal;
+}
+
+main > .section:has(#adobe-experience-league) #adobe-experience-league {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 32px;
+  line-height: normal;
+}
+
+main > .section:has(#adobe-experience-league) .default-content-wrapper > p:last-child {
+  margin: 0;
+}
+
+main > .section:has(#adobe-experience-league) #adobe-experience-league + p {
+  max-width: 760px;
+  margin: 0 0 22px;
+  color: rgb(255 255 255 / 84%);
+  line-height: 1.65;
+}
+
+main > .section:has(#adobe-experience-league) .default-content-wrapper > p:last-child > a:any-link {
+  display: inline-block;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 17px;
+  background: #fff;
+  color: #071d36;
+  font-weight: 900;
+  line-height: normal;
+  text-decoration: none;
+}
+
+@media (width < 600px) {
+  main > .section:has(#adobe-experience-league) #adobe-experience-league {
+    max-width: 220px;
+  }
 }

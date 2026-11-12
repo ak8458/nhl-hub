@@ -13,6 +13,11 @@ Before using the aem-boilerplate, we recommend you to go through the documentati
 3. [Web Performance](https://www.aem.live/developer/keeping-it-100)
 4. [Markup, Sections, Blocks, and Auto Blocking](https://www.aem.live/developer/markup-sections-blocks)
 
+## Page authoring
+
+- To use a looping hero video, add an MP4 link to the hero image cell or link the image to the MP4. The image remains the fallback when the video cannot play or reduced motion is enabled.
+- To hide the masthead and navigation on a page, add `header: off` to its metadata. The home page remains headerless by default.
+
 ## Installation
 
 ```sh

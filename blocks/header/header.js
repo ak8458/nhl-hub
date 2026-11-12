@@ -91,7 +91,8 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  if (window.location.pathname === '/') {
+  const headerMeta = getMetadata('header');
+  if (window.location.pathname === '/' || headerMeta?.trim().toLowerCase() === 'off') {
     block.closest('header')?.remove();
     return;
   }
@@ -186,4 +187,11 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+  if (navSections && window.matchMedia('(max-width: 599px)').matches) {
+    const activeItem = navSections.querySelector('.nav-drop > button.nav-active, a[aria-current="page"]');
+    if (activeItem) {
+      navSections.scrollLeft = activeItem.getBoundingClientRect().left
+        - nav.getBoundingClientRect().left - 1;
+    }
+  }
 }

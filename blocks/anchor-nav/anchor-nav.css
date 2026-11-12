@@ -1,7 +1,21 @@
+main > .section.anchor-nav-container {
+  padding: 0 0 44px;
+}
+
+.anchor-nav-container > .default-content-wrapper > p {
+  margin: 8px 0 22px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
 .anchor-nav .section-anchor-nav {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  border: 1px solid #dce4ee;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
 }
 
 .anchor-nav .section-anchor-nav a:any-link {
@@ -10,8 +24,9 @@
   border-radius: 999px;
   background: #edf5fc;
   color: #173858;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: normal;
 }
 
 .anchor-nav .section-anchor-nav a:focus-visible,
@@ -19,4 +34,16 @@
   background: #d7ecff;
   outline: 2px solid #0875d1;
   outline-offset: 2px;
+}
+
+@media (width < 700px) {
+  main > .section.anchor-nav-container {
+    padding: 20px 0 44px;
+  }
+}
+
+@media (width >= 700px) and (width < 900px) {
+  main > .section.anchor-nav-container {
+    padding-bottom: 62px;
+  }
 }
