@@ -76,6 +76,39 @@ function buildWidgetAutoBlocks(main) {
   });
 }
 
+function buildSideNavigation(main) {
+  if (getMetadata('side-navigation').trim().toLowerCase() !== 'on') return;
+  if (main.querySelector('.anchor-nav.side-navigation')) return;
+
+  const heading = [...main.querySelectorAll('h2')]
+    .find((element) => element.textContent.trim() && !element.closest('.hero, .cards'));
+  const authored = main.querySelector('.anchor-nav');
+  if (!heading && !authored) return;
+
+  const block = authored || buildBlock('anchor-nav', '');
+  block.classList.add('side-navigation');
+  if (!heading) return;
+
+  const section = document.createElement('div');
+  section.className = 'side-navigation-section';
+  const contentSection = [...main.children].find((child) => child.contains(heading));
+  const oldSection = authored?.parentElement;
+  section.append(block);
+  if (oldSection && !oldSection.textContent.trim() && !oldSection.children.length) {
+    oldSection.remove();
+  }
+  contentSection.before(section);
+  main.classList.add('has-side-navigation');
+  const sections = [...main.children];
+  const index = sections.indexOf(section);
+  sections.forEach((child, position) => {
+    child.classList.toggle('side-navigation-intro', position < index);
+    child.classList.toggle('side-navigation-content', position > index);
+  });
+  main.style.setProperty('--side-navigation-start', index + 1);
+  main.style.setProperty('--side-navigation-rows', Math.max(1, sections.length - index - 1));
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -100,6 +133,7 @@ function buildAutoBlocks(main) {
       });
     }
     buildWidgetAutoBlocks(main);
+    buildSideNavigation(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -174,6 +208,13 @@ async function loadEager(doc) {
         header.remove();
       } else {
         doc.body.classList.add('header-loading');
+        // The masthead image is the LCP; fetch its fragment before header.js requests it.
+        const mastheadPreload = doc.createElement('link');
+        mastheadPreload.rel = 'preload';
+        mastheadPreload.as = 'fetch';
+        mastheadPreload.crossOrigin = 'anonymous';
+        mastheadPreload.href = '/fragments/masthead.plain.html';
+        doc.head.append(mastheadPreload);
         let timeoutId;
         const timeout = new Promise((resolve) => {
           timeoutId = window.setTimeout(() => {
@@ -214,9 +255,18 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
+  main.dispatchEvent(new Event('sections-loaded'));
 
   const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
+  let element = hash ? doc.getElementById(hash.substring(1)) : null;
+  if (hash && !element && main.classList.contains('has-side-navigation')) {
+    try {
+      element = doc.getElementById(decodeURIComponent(hash.substring(1)));
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('Unable to decode the section link.', error);
+    }
+  }
   if (hash && element) element.scrollIntoView();
 
   loadFooter(doc.querySelector('body > footer'));

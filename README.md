@@ -17,6 +17,9 @@ Before using the aem-boilerplate, we recommend you to go through the documentati
 
 - To use a looping hero video, add an MP4 link to the hero image cell or link the image to the MP4. The image remains the fallback when the video cannot play or reduced motion is enabled.
 - To hide the masthead and navigation on a page, add `header: off` to its metadata. The home page remains headerless by default.
+- Add `side-navigation: on` to page metadata to automatically build a sidebar from non-empty H2 headings and their H3 subsections, excluding hero and card headings. Existing heading IDs are retained when unique; missing or duplicate IDs get unique anchors. Keep heading text stable to preserve automatically generated deep links.
+- The sidebar highlights the current section and reveals its subsections. It is sticky on desktop (900px and above) and appears expanded above the article on smaller screens. Keyboard focus also reveals a section's subsection links.
+- Optionally author an Anchor Nav (related) block with links to related pages. On opted-in pages those links appear below the generated section links; no authored hash list is needed. Use `side-navigation: off` or remove the metadata to restore the normal page layout; the related links render inline. Ordinary Anchor Nav blocks retain their existing hash-only behavior.
 
 ## Installation
 
@@ -29,6 +32,14 @@ npm i
 ```sh
 npm run lint
 ```
+
+The side-navigation browser tests use Node's test runner, Playwright, and an installed Google Chrome. Start the local server, then run without adding project dependencies:
+
+```sh
+npx --yes --package=playwright -c 'NODE_PATH="$(dirname "$(dirname "$(command -v playwright)")")" node --test test/side-navigation.test.cjs'
+```
+
+Set `TEST_BASE_URL` to run the same checks against a branch preview containing the draft guide.
 
 ## Local development
 
