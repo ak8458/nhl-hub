@@ -380,6 +380,11 @@ main.has-side-navigation h3 {
   scroll-margin-top: var(--side-navigation-offset);
 }
 
+main.has-side-navigation .default-content-wrapper a:not(.button) {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 main.has-side-navigation > .section.side-navigation-section {
   padding: 16px 0;
 }
