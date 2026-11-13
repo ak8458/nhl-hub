@@ -208,6 +208,13 @@ async function loadEager(doc) {
         header.remove();
       } else {
         doc.body.classList.add('header-loading');
+        // The masthead image is the LCP; fetch its fragment before header.js requests it.
+        const mastheadPreload = doc.createElement('link');
+        mastheadPreload.rel = 'preload';
+        mastheadPreload.as = 'fetch';
+        mastheadPreload.crossOrigin = 'anonymous';
+        mastheadPreload.href = '/fragments/masthead.plain.html';
+        doc.head.append(mastheadPreload);
         let timeoutId;
         const timeout = new Promise((resolve) => {
           timeoutId = window.setTimeout(() => {
