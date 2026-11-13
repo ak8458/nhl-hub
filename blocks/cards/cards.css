@@ -625,7 +625,7 @@ main:has(.cards.overview-cards) .accordion {
   max-width: 900px;
 }
 
-main:has(.cards.overview-cards) > .section:last-child {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) {
   width: 86%;
   max-width: 1101px;
   margin: 0 auto;
@@ -635,7 +635,7 @@ main:has(.cards.overview-cards) > .section:last-child {
   color: #fff;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper {
   display: grid;
   width: calc(100% - 66px);
   max-width: 680px;
@@ -645,7 +645,7 @@ main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper
   padding: 0;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > p:first-child {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > p:first-child {
   grid-column: 1 / -1;
   margin: 0 0 8px;
   color: #a9d3f6;
@@ -653,7 +653,7 @@ main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper
   line-height: normal;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > h2 {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > h2 {
   grid-column: 1 / -1;
   max-width: 650px;
   margin: 0 0 10px;
@@ -664,7 +664,7 @@ main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper
   line-height: normal;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > h2 + p {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > h2 + p {
   grid-column: 1 / -1;
   max-width: 680px;
   margin: 0 0 26px;
@@ -673,13 +673,13 @@ main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper
   line-height: 1.6;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > p:nth-last-child(-n + 2) {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > p:nth-last-child(-n + 2) {
   margin: 0;
   line-height: normal;
   justify-self: start;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > p:nth-last-child(-n + 2) > a {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > p:nth-last-child(-n + 2) > a {
   display: inline-flex;
   min-height: 38px;
   align-items: center;
@@ -690,12 +690,12 @@ main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper
   text-decoration: none;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > p:nth-last-child(2) > a {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > p:nth-last-child(2) > a {
   border: 1px solid rgb(255 255 255 / 38%);
   color: #fff;
 }
 
-main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > p:last-child > a {
+main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > p:last-child > a {
   border: 0;
   padding: 10px 17px;
   background: #fff;
@@ -730,27 +730,27 @@ main:has(.cards.overview-cards) > .section:nth-child(n + 3) > div {
 }
 
 @media (width >= 700px) and (width < 900px) {
-  main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper {
+  main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper {
     width: calc(100% - 50px);
     margin-left: 25px;
   }
 }
 
 @media (width < 700px) {
-  main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper {
+  main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper {
     width: calc(100% - 68px);
     grid-template-columns: 1fr;
     row-gap: 0;
     margin-left: 34px;
   }
 
-  main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > p:first-child,
-  main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > h2,
-  main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > h2 + p {
+  main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > p:first-child,
+  main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > h2,
+  main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > h2 + p {
     width: 100%;
   }
 
-  main:has(.cards.overview-cards) > .section:last-child > .default-content-wrapper > p:nth-last-child(2) {
+  main:has(.cards.overview-cards) > .section:has(#put-your-audience-into-a-fan-experience) > .default-content-wrapper > p:nth-last-child(2) {
     margin-bottom: 10px;
   }
 
