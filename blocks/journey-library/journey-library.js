@@ -1,3 +1,7 @@
+import { trackEvent } from '../../scripts/analytics-events.js';
+
+const SEARCH_TRACKING_DELAY = 1000;
+
 const filterFields = [
   ['level', 'Level'],
   ['readiness', 'Readiness'],
@@ -153,6 +157,13 @@ function addRelatedActions(record, body, records, dialogs) {
     button.addEventListener('click', () => {
       dialogs.get(record.title)?.close();
       dialogs.get(related.title)?.showModal();
+      trackEvent('journey.relatedClick', {
+        label: related.title,
+        region: 'journey-library',
+        journey: {
+          id: related.id, title: related.title, level: related.level, sourceTitle: record.title,
+        },
+      });
     });
     label.replaceWith(button);
   });
@@ -206,7 +217,17 @@ function createCard(record, index, dialog) {
   learnMore.append(' ', arrow);
   learnMore.type = 'button';
   learnMore.setAttribute('aria-haspopup', 'dialog');
-  learnMore.addEventListener('click', () => dialog.showModal());
+  learnMore.addEventListener('click', () => {
+    dialog.showModal();
+    trackEvent('journey.cardOpen', {
+      label: record.title,
+      region: 'journey-library',
+      position: index + 1,
+      journey: {
+        id: record.id, title: record.title, level: record.level, readiness: record.readiness,
+      },
+    });
+  });
   footer.append(learnMore);
   content.append(footer);
   article.append(content);
@@ -313,17 +334,52 @@ export default function decorate(block) {
 
     resultCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'journey' : 'journeys'}`;
     empty.hidden = visibleCount > 0;
+    return visibleCount;
   };
 
-  search.addEventListener('input', updateResults);
-  Object.values(filters).forEach((filter) => filter.addEventListener('change', updateResults));
+  let searchTimer;
+  let lastTrackedQuery = '';
+  const trackSearch = () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => {
+      const query = search.value.trim().toLowerCase();
+      if (query.length < 3 || query === lastTrackedQuery) return;
+      lastTrackedQuery = query;
+      const resultsCount = updateResults();
+      trackEvent('journey.search', {
+        label: query,
+        region: 'journey-library',
+        journey: { searchTerm: query, resultsCount, zeroResults: resultsCount === 0 },
+      });
+    }, SEARCH_TRACKING_DELAY);
+  };
+
+  search.addEventListener('input', () => {
+    updateResults();
+    trackSearch();
+  });
+  Object.values(filters).forEach((filter) => filter.addEventListener('change', () => {
+    const resultsCount = updateResults();
+    trackEvent('journey.filter', {
+      label: `${filter.dataset.filter}:${filter.value || 'all'}`,
+      region: 'journey-library',
+      journey: { filterKey: filter.dataset.filter, filterValue: filter.value || 'all', resultsCount },
+    });
+  }));
   clear.addEventListener('click', () => {
     search.value = '';
+    lastTrackedQuery = '';
+    window.clearTimeout(searchTimer);
     Object.values(filters).forEach((filter) => {
       filter.value = '';
     });
-    updateResults();
+    const resultsCount = updateResults();
     search.focus();
+    trackEvent('journey.clear', {
+      label: 'clear filters',
+      region: 'journey-library',
+      journey: { resultsCount },
+    });
   });
   updateResults();
 

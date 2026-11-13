@@ -21,6 +21,16 @@ Before using the aem-boilerplate, we recommend you to go through the documentati
 - The sidebar highlights the current section and reveals its subsections. It is sticky on desktop (900px and above) and appears expanded above the article on smaller screens. Keyboard focus also reveals a section's subsection links.
 - Optionally author an Anchor Nav (related) block with links to related pages. On opted-in pages those links appear below the generated section links; no authored hash list is needed. Use `side-navigation: off` or remove the metadata to restore the normal page layout; the related links render inline. Ordinary Anchor Nav blocks retain their existing hash-only behavior.
 
+## Analytics
+
+The site sends data to Adobe Experience Platform with the Web SDK, through the [AEM martech plugin](https://github.com/adobe-rnd/aem-martech) vendored in `plugins/martech`. The data is reported in Customer Journey Analytics and forwarded to Adobe Analytics.
+
+- Add org and datastream IDs in `scripts/martech-config.js`. Tracking stays off until they are set.
+- Collection is gated by consent through `scripts/consent-check.js`, which is a placeholder that defaults to decline; add `?consent=accept` to test.
+- Blocks report interactions with `trackEvent('<area>.<action>', details)` from `scripts/analytics-events.js`.
+
+Docs: [SDR](docs/analytics/sdr.md) · [AEP setup](docs/analytics/aep-setup.md) · [CJA setup](docs/analytics/cja-setup.md) · [Workspace design](docs/analytics/workspace-design.md) · [QA checklist](docs/analytics/qa-checklist.md) · [XDM field group](docs/analytics/xdm/nhl-hub-fieldgroup.json)
+
 ## Installation
 
 ```sh
