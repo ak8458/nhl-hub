@@ -6,3 +6,9 @@ package.json
 package-lock.json
 test/*
 sync-block-collection.sh
+docs/*
+plugins/martech/test/*
+plugins/martech/scripts/*
+plugins/martech/aem-martech.jpg
+plugins/martech/renovate.json
+plugins/martech/vitest.config.js

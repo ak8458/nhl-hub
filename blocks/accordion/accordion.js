@@ -1,3 +1,5 @@
+import { trackEvent } from '../../scripts/analytics-events.js';
+
 let accordionCount = 0;
 
 export default function decorate(block) {
@@ -47,7 +49,7 @@ export default function decorate(block) {
     return { button, answer, item };
   });
 
-  items.forEach(({ button, answer }) => {
+  items.forEach(({ button, answer }, index) => {
     button.addEventListener('click', () => {
       const isExpanded = button.getAttribute('aria-expanded') === 'true';
       items.forEach((item) => {
@@ -58,6 +60,12 @@ export default function decorate(block) {
         button.setAttribute('aria-expanded', 'true');
         answer.hidden = false;
       }
+      trackEvent('accordion.toggle', {
+        label: button.textContent.trim(),
+        region: 'accordion',
+        state: isExpanded ? 'collapsed' : 'expanded',
+        position: index + 1,
+      });
     });
   });
 

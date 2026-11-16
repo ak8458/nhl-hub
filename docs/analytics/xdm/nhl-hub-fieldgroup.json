@@ -1,0 +1,81 @@
+{
+  "title": "NHL Hub Interactions",
+  "description": "Custom page context and interaction details collected by the NHL Hub (AEM Edge Delivery Services) site. Replace every \"_tenant\" key with your org's tenant ID (e.g. \"_nhl\") before POSTing to /data/foundation/schemaregistry/tenant/fieldgroups.",
+  "type": "object",
+  "meta:intendedToExtend": [
+    "https://ns.adobe.com/xdm/context/experienceevent"
+  ],
+  "definitions": {
+    "nhlHubFields": {
+      "properties": {
+        "_tenant": {
+          "type": "object",
+          "properties": {
+            "nhlHub": {
+              "title": "NHL Hub",
+              "type": "object",
+              "properties": {
+                "page": {
+                  "title": "Page",
+                  "type": "object",
+                  "properties": {
+                    "template": { "title": "Page Template", "type": "string" },
+                    "theme": { "title": "Page Theme", "type": "string" },
+                    "language": { "title": "Page Language", "type": "string" },
+                    "environment": {
+                      "title": "Environment",
+                      "type": "string",
+                      "enum": ["dev", "prod"],
+                      "meta:enum": { "dev": "Development", "prod": "Production" }
+                    }
+                  }
+                },
+                "interaction": {
+                  "title": "Interaction",
+                  "type": "object",
+                  "properties": {
+                    "name": { "title": "Interaction Name", "type": "string" },
+                    "label": { "title": "Interaction Label", "type": "string", "maxLength": 100 },
+                    "region": { "title": "Interaction Region", "type": "string" },
+                    "state": { "title": "Interaction State", "type": "string" },
+                    "position": { "title": "Interaction Position", "type": "integer", "minimum": 0 }
+                  }
+                },
+                "journey": {
+                  "title": "Journey Library",
+                  "type": "object",
+                  "properties": {
+                    "id": { "title": "Journey ID", "type": "string" },
+                    "title": { "title": "Journey Title", "type": "string" },
+                    "level": { "title": "Journey Level", "type": "string" },
+                    "readiness": { "title": "Journey Readiness", "type": "string" },
+                    "sourceTitle": { "title": "Source Journey Title", "type": "string" },
+                    "searchTerm": { "title": "Search Term", "type": "string", "maxLength": 100 },
+                    "resultsCount": { "title": "Results Count", "type": "integer", "minimum": 0 },
+                    "zeroResults": { "title": "Zero Results", "type": "boolean" },
+                    "filterKey": { "title": "Filter Key", "type": "string" },
+                    "filterValue": { "title": "Filter Value", "type": "string" }
+                  }
+                },
+                "media": {
+                  "title": "Video",
+                  "type": "object",
+                  "properties": {
+                    "id": { "title": "Video ID", "type": "string" },
+                    "title": { "title": "Video Title", "type": "string" },
+                    "length": { "title": "Video Length (seconds)", "type": "integer", "minimum": 0 },
+                    "milestone": { "title": "Video Milestone", "type": "string" }
+                  }
+                },
+                "scrollDepth": { "title": "Scroll Depth (%)", "type": "integer", "minimum": 0, "maximum": 100 }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    { "$ref": "#/definitions/nhlHubFields" }
+  ]
+}

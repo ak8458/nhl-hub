@@ -1,4 +1,5 @@
 import { loadCSS } from '../../scripts/aem.js';
+import { trackEvent } from '../../scripts/analytics-events.js';
 
 /**
  * Parses a widget href into folder path and name.
@@ -72,7 +73,28 @@ export default async function decorate(widget) {
       if (mod.default) await mod.default(widget);
     })();
     await Promise.all([cssLoaded, decorationComplete]);
+    trackEvent('widget.load', { label: widgetName, region: 'widget', state: 'loaded' });
+
+    // links are tracked globally, so only report other controls here
+    widget.addEventListener('click', (event) => {
+      const control = event.target.closest('button, [role="button"], summary');
+      if (!control || !widget.contains(control)) return;
+      trackEvent('widget.interaction', {
+        label: `${widgetName}:${control.textContent.trim() || control.getAttribute('aria-label') || 'control'}`,
+        region: 'widget',
+      });
+    });
+    widget.addEventListener('change', (event) => {
+      const field = event.target.closest('select, input, textarea');
+      if (!field) return;
+      trackEvent('widget.interaction', {
+        label: `${widgetName}:${field.name || field.id || field.type}`,
+        region: 'widget',
+        state: 'changed',
+      });
+    });
   } catch (error) {
+    trackEvent('widget.load', { label: widgetName, region: 'widget', state: 'error' });
     // eslint-disable-next-line no-console
     console.error(`failed to load widget ${widgetPath}/${widgetName}`, error);
   }

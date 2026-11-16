@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { trackEvent } from '../../scripts/analytics-events.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -159,6 +160,11 @@ export default async function decorate(block) {
             toggleAllNavSections(navSections);
           }
           button.setAttribute('aria-expanded', !expanded);
+          trackEvent('nav.toggle', {
+            label: button.textContent.trim(),
+            region: 'header',
+            state: expanded ? 'collapsed' : 'expanded',
+          });
         });
       }
     });
@@ -170,7 +176,14 @@ export default async function decorate(block) {
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
+  hamburger.addEventListener('click', () => {
+    toggleMenu(nav, navSections);
+    trackEvent('nav.toggle', {
+      label: 'menu',
+      region: 'header',
+      state: nav.getAttribute('aria-expanded') === 'true' ? 'expanded' : 'collapsed',
+    });
+  });
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
