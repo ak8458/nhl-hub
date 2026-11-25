@@ -20,6 +20,7 @@ Before using the aem-boilerplate, we recommend you to go through the documentati
 - Add `side-navigation: on` to page metadata to automatically build a sidebar from non-empty H2 headings and their H3 subsections, excluding hero and card headings. Existing heading IDs are retained when unique; missing or duplicate IDs get unique anchors. Keep heading text stable to preserve automatically generated deep links.
 - The sidebar highlights the current section and reveals its subsections. It is sticky on desktop (900px and above) and appears expanded above the article on smaller screens. Keyboard focus also reveals a section's subsection links.
 - Optionally author an Anchor Nav (related) block with links to related pages. On opted-in pages those links appear below the generated section links; no authored hash list is needed. Use `side-navigation: off` or remove the metadata to restore the normal page layout; the related links render inline. Ordinary Anchor Nav blocks retain their existing hash-only behavior.
+- Author a Journey Library as one repeating block row per journey with four cells: metadata (`ID`, level, source, readiness), summary (heading plus labeled journey fields), details (overview, audience, activation), and examples (example audiences plus optional related journeys). `Value` and `Complexity` are optional; missing values are filterable as `Not rated`. Use exact related journey titles so dialog-to-dialog navigation can resolve them.
 
 ## Installation
 
@@ -37,6 +38,12 @@ The side-navigation browser tests use Node's test runner, Playwright, and an ins
 
 ```sh
 npx --yes --package=playwright -c 'NODE_PATH="$(dirname "$(dirname "$(command -v playwright)")")" node --test test/side-navigation.test.cjs'
+```
+
+Run the Journey Library interaction tests against the same local server:
+
+```sh
+npx --yes --package=playwright -c 'NODE_PATH="$(dirname "$(dirname "$(command -v playwright)")")" node --test test/journey-library.test.cjs'
 ```
 
 Set `TEST_BASE_URL` to run the same checks against a branch preview containing the draft guide.

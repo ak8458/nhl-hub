@@ -8,11 +8,17 @@ const filterFields = [
 const filterOptionOrder = {
   level: ['League', 'Club'],
   readiness: ['Foundation', 'Priority', 'Pilot', 'Candidate'],
-  value: ['High', 'Medium'],
-  complexity: ['Medium', 'High', 'Low'],
+  value: ['High', 'Medium', 'Not rated'],
+  complexity: ['Medium', 'High', 'Low', 'Not rated'],
 };
 
+const NOT_RATED = 'Not rated';
+
 let instanceCount = 0;
+
+function getFilterValue(record, key) {
+  return ['value', 'complexity'].includes(key) ? record[key] || NOT_RATED : record[key];
+}
 
 function getField(cell, label) {
   const paragraph = [...cell.querySelectorAll('p')].find((item) => {
@@ -73,6 +79,8 @@ function getRecord(row) {
       getField(overview, 'target audience'),
       getField(overview, 'primary business goal'),
       getField(overview, 'primary activation channel'),
+      getField(overview, 'value'),
+      getField(overview, 'complexity'),
     ]
       .filter(Boolean)
       .join(' ')
@@ -258,7 +266,9 @@ export default function decorate(block) {
   const filterGrid = document.createElement('div');
   filterGrid.className = 'journey-filter-grid';
   filterFields.forEach(([key, label]) => {
-    const availableOptions = new Set(records.map((record) => record[key]).filter(Boolean));
+    const availableOptions = new Set(
+      records.map((record) => getFilterValue(record, key)).filter(Boolean),
+    );
     const preferredOptions = filterOptionOrder[key];
     const options = [
       ...preferredOptions.filter((option) => availableOptions.has(option)),
@@ -303,7 +313,7 @@ export default function decorate(block) {
 
     records.forEach((record, index) => {
       const matchesFilters = filterFields.every(([key]) => (
-        !filters[key].value || record[key] === filters[key].value
+        !filters[key].value || getFilterValue(record, key) === filters[key].value
       ));
       const matchesQuery = !query || record.searchableText.includes(query);
       const visible = matchesFilters && matchesQuery;
